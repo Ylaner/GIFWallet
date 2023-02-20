@@ -14,6 +14,8 @@ import { messageRouter } from "./routes/messageRouter";
 import { webhookCallback } from "grammy";
 
 //////////////////////////////////////////////////////////////////////////////////////////
+const app = express();
+const PORT = process.env.PORT || 8443;
 process.on("uncaughtException", (err) => {
   console.error(err);
   console.log("UncaughtException error , server going down ...");
@@ -21,23 +23,23 @@ process.on("uncaughtException", (err) => {
 });
 dotenv.config({ path: "./config.env" });
 //////////////////////////////////////////////////////////////////////////////////////////
-const telegramToken = process.env.TELEGRAM_TOKEN!;
+const telegramToken = process.env.TELEGRAM_API_TOKEN!;
 const bot = new grammy.Bot(telegramToken);
 
 errorHandler(bot);
 const envDatabase = process.env.DATABASE!;
 const DB = envDatabase;
 
-mongoose.set("strictQuery", false);
-(async function connect() {
-  const db = await mongoose.connect(DB, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    // useFindAndModify: false,
-  });
-  console.log("connection to the database was succesful👌👌");
-})();
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(DB);
+    console.log("REEEEADY TO GOO");
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
 ////////////// Middlewares ////////////////// bot.use(fn(ctx, next))
 //Auth Control
@@ -76,15 +78,19 @@ console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === "production") {
   // Use Webhooks for the production server
-  const app = express();
+
   app.use(express.json());
   app.use(webhookCallback(bot, "express"));
 
-  const PORT = process.env.PORT || 8443;
-  app.listen(PORT, () => {
-    console.log(`Bot listening on port ${PORT}`);
+  connectDB().then(() => {
+    app.listen(PORT, () => {
+      console.log("listening for requests");
+    });
   });
 } else {
   // Use Long Polling for development
-  bot.start();
+
+  connectDB().then(() => {
+    bot.start();
+  });
 }
