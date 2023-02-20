@@ -25,8 +25,7 @@ const bot = new grammy.Bot("5353006019:AAGNfZZwBzN_7I0wlIPecKGFQsUB7UJw_88");
 
 errorHandler(bot);
 const envDatabase = process.env.DATABASE!;
-const envPassword = process.env.PASSWORD!;
-const DB = envDatabase.replace("<PASSWORD>", envPassword);
+const DB = envDatabase;
 
 mongoose.set("strictQuery", false);
 (async function connect() {
