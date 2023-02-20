@@ -1,5 +1,7 @@
 const grammy = require("grammy");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const express = require("express");
 //////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -9,24 +11,31 @@ import { commandRouter } from "./routes/commandRouter";
 import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
+import { webhookCallback } from "grammy";
 
 //////////////////////////////////////////////////////////////////////////////////////////
-
+process.on("uncaughtException", (err) => {
+  console.error(err);
+  console.log("UncaughtException error , server going down ...");
+  process.exit(1);
+});
+dotenv.config({ path: "./config.env" });
 //////////////////////////////////////////////////////////////////////////////////////////
 const bot = new grammy.Bot("5353006019:AAGNfZZwBzN_7I0wlIPecKGFQsUB7UJw_88");
 
 errorHandler(bot);
+const envDatabase = process.env.DATABASE!;
+const envPassword = process.env.PASSWORD!;
+const DB = envDatabase.replace("<PASSWORD>", envPassword);
+
 mongoose.set("strictQuery", false);
 (async function connect() {
-  const db = await mongoose.connect(
-    "mongodb+srv://Ylaner:ACMilan00All@cluster0.t84fv.mongodb.net/test",
-    {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      // useCreateIndex: true,
-      // useFindAndModify: false,
-    }
-  );
+  const db = await mongoose.connect(DB, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    // useCreateIndex: true,
+    // useFindAndModify: false,
+  });
   console.log("connection to the database was succesful👌👌");
 })();
 
@@ -63,4 +72,19 @@ bot.on("inline_query", async (ctx: any) => {
   await inlineQueriesRouter(ctx);
 });
 // Start the bot.
-bot.start();
+console.log(process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === "production") {
+  // Use Webhooks for the production server
+  const app = express();
+  app.use(express.json());
+  app.use(webhookCallback(bot, "express"));
+
+  const PORT = process.env.PORT || 8443;
+  app.listen(PORT, () => {
+    console.log(`Bot listening on port ${PORT}`);
+  });
+} else {
+  // Use Long Polling for development
+  bot.start();
+}
