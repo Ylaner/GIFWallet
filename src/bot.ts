@@ -21,7 +21,8 @@ process.on("uncaughtException", (err) => {
 });
 dotenv.config({ path: "./config.env" });
 //////////////////////////////////////////////////////////////////////////////////////////
-const bot = new grammy.Bot("5353006019:AAGNfZZwBzN_7I0wlIPecKGFQsUB7UJw_88");
+const telegramToken = process.env.TELEGRAM_TOKEN!;
+const bot = new grammy.Bot(telegramToken);
 
 errorHandler(bot);
 const envDatabase = process.env.DATABASE!;
