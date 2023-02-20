@@ -9,10 +9,10 @@
     "mongoose": "^6.5.4"
   },
   "scripts": {
+    "build": "tsc",
     "start": "node ./dist/bot.js",
     "live": "set NODE_ENV=development&& nodemon nodemon ./dist/bot.js",
-    "live:prod": "set NODE_ENV=production&& nodemon ./dist/bot.js",
-    "build": "tsc"
+    "live:prod": "set NODE_ENV=production&& nodemon ./dist/bot.js"
   },
   "author": "@Y_Laner",
   "license": "ISC",
