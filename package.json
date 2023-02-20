@@ -1,0 +1,16 @@
+{
+  "name": "my_bot",
+  "version": "1.0.0",
+  "main": "./dist/bot.js",
+  "dependencies": {
+    "grammy": "^1.11.0",
+    "mongoose": "^6.5.4"
+  },
+  "scripts": {
+    "live": "nodemon ./dist/bot.js",
+    "tsw": "tsc ./index.ts -watch"
+  },
+  "author": "@Y_Laner",
+  "license": "ISC",
+  "description": ""
+}
