@@ -1,7 +1,7 @@
 import { EvelateContext } from "../Types/Types";
 
-const Gif = require("../models/gifModel");
-const { sendMessage } = require("./handlerFactory");
+import { Gif } from "../models/gifModel";
+import { sendMessage } from "./handlerFactory";
 
 exports.messageControll = async (ctx: EvelateContext) => {
   console.log("message controll triggerd");

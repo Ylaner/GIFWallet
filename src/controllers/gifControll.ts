@@ -14,7 +14,7 @@ exports.gifHandler = async function (ctx: any) {
   const isItNew = stageName === ctx.stageEnums.NEW;
   const isItGifSaved = stageName === ctx.stageEnums.GIF_SAVED;
   //////////////////////////////////////////////////////////
-  //Can user on a demand stage for saving new gif?
+  //Can save new gif?
   if (isItGifPending === false && isItNew === false && isItGifSaved === false) {
     if (stageName === "MESSAGE_PENDING") {
       await sendMessage(
