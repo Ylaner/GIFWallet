@@ -5,8 +5,13 @@ export const sendMessage = async function (
   message: string,
   keyboard: any = null
 ) {
+  console.log("GOOOOOOZ");
+
   if (keyboard != null) await ctx.reply(message);
-  else await ctx.reply(message, { reply_markup: keyboard });
+  else {
+    console.log("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
+    await ctx.reply(message, { reply_markup: keyboard });
+  }
 };
 //////////////////////////////
 export const wait = function (seconds: number) {
@@ -26,7 +31,6 @@ export const searchForGIF = async function (ctx: any, index = null) {
     gifUniqueId,
     user,
   });
-  console.log(gif);
   if (gif) return gif;
   else return undefined;
 };
