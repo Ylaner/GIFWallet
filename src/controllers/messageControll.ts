@@ -1,9 +1,8 @@
 import { EvelateContext } from "../Types/Types";
+import { sendMessage } from "./handlerFactory";
+import { searchForGIF } from "./gifControll";
 
-import { Gif } from "../models/gifModel";
-import { searchForGIF, sendMessage } from "./handlerFactory";
-
-exports.messageControll = async (ctx: EvelateContext) => {
+export const messageControll = async (ctx: EvelateContext) => {
   console.log("message controll triggerd");
   const user = ctx.user;
   if (user.userOnStage?.stageName === ctx.stageEnums.MESSAGE_PENDING) {
@@ -21,6 +20,6 @@ exports.messageControll = async (ctx: EvelateContext) => {
     user.userOnStage.details = null;
     await ctx.user.updateOne(user);
     //Task last
-    await sendMessage(ctx, "Ur gif was saved.");
-  } else await sendMessage(ctx, "Please Send ur gif first.");
+    await sendMessage(ctx, "Your GIF is saved.");
+  } else await sendMessage(ctx, "Please send your GIF first.");
 };

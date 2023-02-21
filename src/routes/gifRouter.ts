@@ -1,5 +1,8 @@
-const { gifSave, gifHandler } = require("../controllers/gifControll");
-
+import { gifHandler } from "../controllers/gifControll";
 export const gifRouter = async function (ctx: any) {
-  await gifHandler(ctx);
+  try {
+    await gifHandler(ctx);
+  } catch (err) {
+    console.log(err);
+  }
 };
