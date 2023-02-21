@@ -40,6 +40,4 @@ gifSchema.index({ user: 1, key: 1, gifId: 1 });
 //   next();
 // });
 
-const Gif = mongoose2.model("Gif", gifSchema);
-
-module.exports = Gif;
+export const Gif = mongoose2.model("Gif", gifSchema);

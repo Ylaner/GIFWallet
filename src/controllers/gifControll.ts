@@ -1,9 +1,10 @@
-import { EvelateContext } from "../Types/Types";
+import { searchForGIF, sendMessage } from "./handlerFactory";
+import { Gif } from "../models/gifModel";
+import { menu } from "../utils/menus";
+////////////////////////////////////////////////////////////////
 
-const Gif = require("../models/gifModel");
-const { wait, sendMessage } = require("./handlerFactory");
-
-exports.gifSave = async function (ctx: EvelateContext) {
+////////////////////////////////////////////////////////////////
+exports.gifHandler = async function (ctx: any) {
   console.log("Gif controll triggerd");
   console.log(ctx.update.message?.animation);
 
@@ -13,7 +14,7 @@ exports.gifSave = async function (ctx: EvelateContext) {
   const isItNew = stageName == ctx.stageEnums.NEW;
   const isItGifSaved = stageName == ctx.stageEnums.GIF_SAVED;
   //////////////////////////////////////////////////////////
-  //Can user save new gif?
+  //Can user on a demand stage for saving new gif?
   if (isItGifPending == false && isItNew == false && isItGifSaved == false) {
     if (stageName == "MESSAGE_PENDING") {
       await sendMessage(
@@ -23,8 +24,14 @@ exports.gifSave = async function (ctx: EvelateContext) {
     }
     return;
   }
-  if (await isGifExist(ctx)) {
-    await sendMessage(ctx, "This Gif was saved before");
+  /////////////////////////////////////////////////////////////
+  //Check the gif not saved before
+  if (await searchForGIF(ctx)) {
+    await sendMessage(
+      ctx,
+      "This Gif was saved before, you can change the index or delete this gif ",
+      menu
+    );
     return;
   }
   const user: any = ctx.user;
@@ -53,20 +60,5 @@ exports.gifSave = async function (ctx: EvelateContext) {
   await user.save();
   await sendMessage(ctx, "Thanks");
   //   await ctx.replyWithAnimation(ctx.gifData);
-  await wait(0.5);
   await sendMessage(ctx, "Please send a message for the gif:");
-};
-
-const isGifExist = async function (ctx: any) {
-  const gifUniqueId = ctx.message?.animation?.file_unique_id!;
-  const user = ctx.user._id;
-  console.log(`gifId : ${gifUniqueId}`);
-  console.log(`userId : ${ctx.user._id}`);
-  const gif = await Gif.findOne({
-    gifUniqueId,
-    user,
-  });
-  console.log(gif);
-  if (gif) return true;
-  else return false;
 };
