@@ -21,7 +21,7 @@ export const wait = function (seconds: number) {
 //////////////////////////////
 export const searchForGIF = async function (
   gifUniqueId: string,
-  user: string,
+  user: string | number,
   index = null
 ) {
   console.log(`gifId : ${gifUniqueId}`);
