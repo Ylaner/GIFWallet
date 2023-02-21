@@ -7,7 +7,7 @@ export const sendMessage = async function (
 ) {
   console.log("GOOOOOOZ");
 
-  if (keyboard != null) await ctx.reply(message);
+  if (keyboard == null) await ctx.reply(message);
   else {
     console.log("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
     await ctx.reply(message, { reply_markup: keyboard });
