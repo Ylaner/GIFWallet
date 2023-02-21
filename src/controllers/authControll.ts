@@ -19,6 +19,6 @@ export const userAuth = async function (ctx: EvelateContext) {
   if (!newUser) {
     newUser = await User.create(userData);
   }
-
+  console.log(ctx);
   ctx.user = newUser;
 };
