@@ -9,8 +9,8 @@ exports.messageControll = async (ctx: EvelateContext) => {
   if (user.userOnStage?.stageName === ctx.stageEnums.MESSAGE_PENDING) {
     //Task 1 find the gif based of user id and gif id
     const gif = await Gif.findOne({
-      userId: user.id,
-      gifId: user.userOnStage.details,
+      user: user._id,
+      gifUniqueId: user.userOnStage.details,
     });
     ////Test
     // console.log(`I FOUND THE FUCKING GIF!!!!!!`);

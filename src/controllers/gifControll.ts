@@ -53,11 +53,11 @@ exports.gifHandler = async function (ctx: any) {
     user: ctx.user._id,
     key: null,
   };
-
   await Gif.create(gifObject);
+  //Update the user stage
   user.userOnStage = {
     stageName: ctx.stageEnums.MESSAGE_PENDING,
-    details: gifId,
+    details: gifUniqueId,
   };
   await user.save();
   await sendMessage(ctx, "Thanks");
