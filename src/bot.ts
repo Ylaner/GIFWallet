@@ -87,6 +87,7 @@ if (process.env.NODE_ENV === "production") {
       console.log("listening for requests");
     });
   });
+  console.log(PORT);
 } else {
   // Use Long Polling for development
 
