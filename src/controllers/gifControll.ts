@@ -1,6 +1,6 @@
 import { searchForGIF, sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
-import { keyboard } from "../utils/keyboard";
+import { menu } from "../utils/keyboard";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ exports.gifHandler = async function (ctx: any) {
     await sendMessage(
       ctx,
       "This Gif was saved before, you can change the index or delete this gif ",
-      keyboard.text("EDIT")
+      menu
     );
     return;
   }
