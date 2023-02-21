@@ -1,16 +1,17 @@
 import { EvelateContext } from "../Types/Types";
 
 import { Gif } from "../models/gifModel";
-import { searchForGIF, sendMessage } from "./handlerFactory";
+import { sendMessage } from "./handlerFactory";
 
-exports.messageControll = async (ctx: any) => {
+exports.messageControll = async (ctx: EvelateContext) => {
   console.log("message controll triggerd");
   const user = ctx.user;
-  console.log(user._id);
-
   if (user.userOnStage?.stageName === ctx.stageEnums.MESSAGE_PENDING) {
     //Task 1 find the gif based of user id and gif id
-    const gif = await searchForGIF(user.userOnStage.details, user._id);
+    const gif = await Gif.findOne({
+      userId: user.id,
+      gifId: user.userOnStage.details,
+    });
     ////Test
     // console.log(`I FOUND THE FUCKING GIF!!!!!!`);
     // console.log(gif);
@@ -23,6 +24,6 @@ exports.messageControll = async (ctx: any) => {
     user.userOnStage.details = null;
     await ctx.user.updateOne(user);
     //Task last
-    await sendMessage(ctx, "Your GIF was saved.");
-  } else await sendMessage(ctx, "Please Send your GIF first.");
+    await sendMessage(ctx, "Ur gif was saved.");
+  } else await sendMessage(ctx, "Please Send ur gif first.");
 };
