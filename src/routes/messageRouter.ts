@@ -1,5 +1,8 @@
-const { messageControll } = require("../controllers/messageControll");
-
+import { messageControll } from "../controllers/messageControll";
 export const messageRouter = async function (ctx: any) {
-  await messageControll(ctx);
+  try {
+    await messageControll(ctx);
+  } catch (err) {
+    console.log(err);
+  }
 };

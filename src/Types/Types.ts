@@ -1,6 +1,3 @@
-const mongoose = require("mongoose");
-const { grammy } = require("grammy");
-
 // type Ctx<Context> = Partial<Context> & {
 //   stageEnums: {"NEW" | "GIF_PENDING" | "MESSAGE_PENDING" | "GIF_SAVED"};
 // };

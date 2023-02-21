@@ -19,17 +19,3 @@ export const wait = function (seconds: number) {
   });
 };
 //////////////////////////////
-export const searchForGIF = async function (
-  gifUniqueId: string,
-  user: string | number,
-  index = null
-) {
-  console.log(`gifId : ${gifUniqueId}`);
-  console.log(`userId : ${user}`);
-  const gif = await Gif.findOne({
-    gifUniqueId,
-    user,
-  });
-  if (gif) return gif;
-  else return undefined;
-};

@@ -1,9 +1,12 @@
-import { Bot, Context } from "grammy";
-
-const { sendMessage } = require("../controllers/handlerFactory");
+import { Bot } from "grammy";
+import { sendMessage } from "../controllers/handlerFactory";
 
 export const commandRouter = (bot: Bot) => {
   bot.command("start", async (ctx: any) => {
-    await sendMessage(ctx, "Hello, Send a gif to start!");
+    try {
+      await sendMessage(ctx, "Hello, Initializing ...");
+    } catch (err) {
+      console.log(err);
+    }
   });
 };

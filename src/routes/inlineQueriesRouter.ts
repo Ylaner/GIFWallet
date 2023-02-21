@@ -1,7 +1,9 @@
-const {
-  inlineQueriesControll,
-} = require("../controllers/inlineQueriesControll");
+import { inlineQueriesControll } from "../controllers/inlineQueriesControll";
 
 export const inlineQueriesRouter = async function (ctx: any) {
-  await inlineQueriesControll(ctx);
+  try {
+    await inlineQueriesControll(ctx);
+  } catch (err) {
+    console.log(err);
+  }
 };
