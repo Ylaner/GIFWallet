@@ -3,12 +3,14 @@ import { EvelateContext } from "../Types/Types";
 import { Gif } from "../models/gifModel";
 import { searchForGIF, sendMessage } from "./handlerFactory";
 
-exports.messageControll = async (ctx: EvelateContext) => {
+exports.messageControll = async (ctx: any) => {
   console.log("message controll triggerd");
   const user = ctx.user;
+  console.log(user._id);
+
   if (user.userOnStage?.stageName === ctx.stageEnums.MESSAGE_PENDING) {
     //Task 1 find the gif based of user id and gif id
-    const gif = await searchForGIF(user.userOnStage.details, user.id);
+    const gif = await searchForGIF(user.userOnStage.details, user._id);
     ////Test
     // console.log(`I FOUND THE FUCKING GIF!!!!!!`);
     // console.log(gif);
