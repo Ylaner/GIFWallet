@@ -1,6 +1,6 @@
 import { EvelateContext, UserData } from "../Types/Types";
 import { stageEnums } from "../utils/enums";
-const User = require("../models/userModel");
+import { User } from "../models/userModel";
 ////////////////////////////////////////////
 
 ////////////////////////////////////////////

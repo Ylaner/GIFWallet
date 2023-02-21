@@ -1,4 +1,4 @@
-const { GrammyError, HttpError, Bot } = require("grammy");
+const { GrammyError, HttpError } = require("grammy");
 
 export const errorHandler = (bot: any) => {
   bot.catch((err: any) => {

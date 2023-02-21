@@ -1,6 +1,5 @@
 import { EvelateContext } from "../Types/Types";
-
-const Gif = require("../models/gifModel");
+import { Gif } from "../models/gifModel";
 
 exports.inlineQueriesControll = async function (ctx: EvelateContext) {
   console.log("inlineQueriesControll triggerd");
