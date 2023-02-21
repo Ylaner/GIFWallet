@@ -26,7 +26,9 @@ exports.gifHandler = async function (ctx: any) {
   }
   /////////////////////////////////////////////////////////////
   //Check the gif not saved before
-  if (await searchForGIF(ctx)) {
+  if (
+    await searchForGIF(ctx.message?.animation?.file_unique_id, ctx.user._id)
+  ) {
     await sendMessage(
       ctx,
       "This Gif was saved before, you can change the index or delete this gif ",

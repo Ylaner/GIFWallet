@@ -23,7 +23,7 @@ export interface EvelateContext {
     first_name: string;
     last_name: string;
     id: number;
-    _id: number;
+    _id: string;
     is_bot: boolean;
     language_code: string;
     username: string;

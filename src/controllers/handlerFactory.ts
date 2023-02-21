@@ -3,14 +3,11 @@ import { Gif } from "../models/gifModel";
 export const sendMessage = async function (
   ctx: any,
   message: string,
-  keyboard: any = null
+  menu: any = null
 ) {
-  console.log("GOOOOOOZ");
-
-  if (keyboard === null) await ctx.reply(message);
+  if (menu === null) await ctx.reply(message);
   else {
-    console.log("BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM");
-    await ctx.reply(message, { reply_markup: keyboard });
+    await ctx.reply(message, { reply_markup: menu });
   }
 };
 //////////////////////////////
@@ -22,11 +19,13 @@ export const wait = function (seconds: number) {
   });
 };
 //////////////////////////////
-export const searchForGIF = async function (ctx: any, index = null) {
-  const gifUniqueId = ctx.message?.animation?.file_unique_id!;
-  const user = ctx.user._id;
+export const searchForGIF = async function (
+  gifUniqueId: string,
+  user: string,
+  index = null
+) {
   console.log(`gifId : ${gifUniqueId}`);
-  console.log(`userId : ${ctx.user._id}`);
+  console.log(`userId : ${user}`);
   const gif = await Gif.findOne({
     gifUniqueId,
     user,
