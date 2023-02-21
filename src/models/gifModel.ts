@@ -20,9 +20,7 @@ const gifSchema = new mongoose2.Schema(
       type: Number,
       required: [true, "Gif must belong to a userId"],
     },
-    key: {
-      type: String,
-    },
+    key: [String],
   },
 
   {
