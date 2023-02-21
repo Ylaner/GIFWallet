@@ -15,7 +15,7 @@ export const inlineQueriesControll = async function (ctx: EvelateContext) {
       type: "gif",
       id: "GifWallet" + i,
       title: "Gif",
-      gif_file_id: gif.gifId,
+      gif_file_id: gif.gifUniqueId,
     };
   });
   await ctx.answerInlineQuery(replyGifs, {
