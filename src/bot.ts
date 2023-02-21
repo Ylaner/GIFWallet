@@ -12,8 +12,7 @@ import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
 import { webhookCallback } from "grammy";
-import { Menu } from "@grammyjs/menu";
-import { menu } from "./utils/menus.js";
+
 //////////////////////////////////////////////////////////////////////////////////////////
 const app = express();
 const PORT = process.env.PORT || 8443;
@@ -45,7 +44,7 @@ const connectDB = async () => {
 
 ////////////// Middlewares ////////////////// bot.use(fn(ctx, next))
 //Menu
-bot.use(menu);
+
 //Auth Control
 //After this we pass ctx as EvelateContext Type
 bot.use(async (ctx: any, next: Function) => {
