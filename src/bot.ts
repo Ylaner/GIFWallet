@@ -57,7 +57,7 @@ bot.use(async (ctx: any, next: Function) => {
 ////////////// Commands ////////////////////// bot.command
 commandRouter(bot);
 
-//////////////////Listeners///////////////// bot.on("message" , fn() )
+///////////////// Listeners //////////////// bot.on("message" , fn() )
 bot.on(":animation", async (ctx: any) => {
   try {
     await gifRouter(ctx);
@@ -73,9 +73,8 @@ bot.on("msg:text", async (ctx: any) => {
 bot.on("inline_query", async (ctx: any) => {
   await inlineQueriesRouter(ctx);
 });
-// Start the bot.
-console.log(process.env.NODE_ENV);
 
+// Start the bot.
 if (process.env.NODE_ENV === "production") {
   // Use Webhooks for the production server
 
@@ -84,13 +83,11 @@ if (process.env.NODE_ENV === "production") {
 
   connectDB().then(() => {
     app.listen(PORT, () => {
-      console.log("listening for requests");
+      console.log(`listening for requests on port: ${PORT}`);
     });
   });
-  console.log(PORT);
 } else {
   // Use Long Polling for development
-
   connectDB().then(() => {
     bot.start();
   });

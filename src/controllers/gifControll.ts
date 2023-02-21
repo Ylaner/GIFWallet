@@ -8,15 +8,17 @@ exports.gifSave = async function (ctx: EvelateContext) {
   console.log(ctx.update.message?.animation);
 
   const stageName = ctx.user.userOnStage.stageName;
+  //booleans
   const isItGifPending = stageName == ctx.stageEnums.GIF_PENDING;
   const isItNew = stageName == ctx.stageEnums.NEW;
   const isItGifSaved = stageName == ctx.stageEnums.GIF_SAVED;
+  //////////////////////////////////////////////////////////
+  //Can user save new gif?
   if (isItGifPending == false && isItNew == false && isItGifSaved == false) {
-    await sendMessage(ctx, stageName);
     if (stageName == "MESSAGE_PENDING") {
       await sendMessage(
         ctx,
-        "you've send another gife before,\nplease send a key for that gif first"
+        "you've send another gif before,\nplease send a key for that gif first"
       );
     }
     return;
@@ -55,7 +57,7 @@ exports.gifSave = async function (ctx: EvelateContext) {
   await sendMessage(ctx, "Please send a message for the gif:");
 };
 
-const isGifExist = async function (ctx: EvelateContext) {
+const isGifExist = async function (ctx: any) {
   const gifUniqueId = ctx.message?.animation?.file_unique_id!;
   const user = ctx.user._id;
   console.log(`gifId : ${gifUniqueId}`);
