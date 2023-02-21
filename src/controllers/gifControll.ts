@@ -1,6 +1,9 @@
 import { searchForGIF, sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
+import { menu } from "../utils/menus";
+////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////
 exports.gifHandler = async function (ctx: any) {
   console.log("Gif controll triggerd");
   console.log(ctx.update.message?.animation);
@@ -26,7 +29,8 @@ exports.gifHandler = async function (ctx: any) {
   if (await searchForGIF(ctx)) {
     await sendMessage(
       ctx,
-      "This Gif was saved before, you can change the index or delete this gif "
+      "This Gif was saved before, you can change the index or delete this gif ",
+      menu
     );
     return;
   }
