@@ -10,13 +10,13 @@ exports.gifHandler = async function (ctx: any) {
 
   const stageName = ctx.user.userOnStage.stageName;
   //booleans
-  const isItGifPending = stageName == ctx.stageEnums.GIF_PENDING;
-  const isItNew = stageName == ctx.stageEnums.NEW;
-  const isItGifSaved = stageName == ctx.stageEnums.GIF_SAVED;
+  const isItGifPending = stageName === ctx.stageEnums.GIF_PENDING;
+  const isItNew = stageName === ctx.stageEnums.NEW;
+  const isItGifSaved = stageName === ctx.stageEnums.GIF_SAVED;
   //////////////////////////////////////////////////////////
   //Can user on a demand stage for saving new gif?
-  if (isItGifPending == false && isItNew == false && isItGifSaved == false) {
-    if (stageName == "MESSAGE_PENDING") {
+  if (isItGifPending === false && isItNew === false && isItGifSaved === false) {
+    if (stageName === "MESSAGE_PENDING") {
       await sendMessage(
         ctx,
         "you've send another gif before,\nplease send a key for that gif first"
