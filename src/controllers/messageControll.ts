@@ -1,17 +1,14 @@
 import { EvelateContext } from "../Types/Types";
 
 import { Gif } from "../models/gifModel";
-import { sendMessage } from "./handlerFactory";
+import { searchForGIF, sendMessage } from "./handlerFactory";
 
 exports.messageControll = async (ctx: EvelateContext) => {
   console.log("message controll triggerd");
   const user = ctx.user;
   if (user.userOnStage?.stageName === ctx.stageEnums.MESSAGE_PENDING) {
     //Task 1 find the gif based of user id and gif id
-    const gif = await Gif.findOne({
-      user: user._id,
-      gifUniqueId: user.userOnStage.details,
-    });
+    const gif = await searchForGIF(user.userOnStage.details, user._id);
     ////Test
     // console.log(`I FOUND THE FUCKING GIF!!!!!!`);
     // console.log(gif);
