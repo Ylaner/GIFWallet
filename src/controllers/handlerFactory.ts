@@ -5,6 +5,7 @@ export const sendMessage = async function (
   message: string,
   menu: any = null
 ) {
+  console.log(`THIS IS THE MENU${menu}`);
   if (menu != null) await ctx.reply(message);
   else await ctx.reply(message, { reply_markup: menu });
 };
