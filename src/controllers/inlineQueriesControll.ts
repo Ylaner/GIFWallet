@@ -9,7 +9,7 @@ export const inlineQueriesControll = async function (ctx: EvelateContext) {
   console.log(`query: ${query} and userId : ${ctx.user._id} `);
 
   const gifs = await Gif.find({
-    key: new RegExp(arrayOfQuery, "i"),
+    key: { $all: arrayOfQuery },
     user: ctx.user._id,
   });
   console.log(gifs);
