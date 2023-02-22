@@ -63,3 +63,10 @@ export interface EvelateContext {
   file_size: number;
   answerInlineQuery: Function;
 }
+
+export type buttonObj = {
+  name: string;
+  hasRow: boolean;
+  action: any;
+};
+export type buttonsArray = buttonObj[];

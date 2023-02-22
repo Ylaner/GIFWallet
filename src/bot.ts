@@ -12,7 +12,7 @@ import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
 import { webhookCallback } from "grammy";
-import { menu } from "./utils/keyboard.js";
+import { menuCRUD } from "./utils/Menu.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////
 const app = express();
@@ -34,7 +34,6 @@ const DB = envDatabase;
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(DB);
-    console.log("REEEEADY TO GOO");
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
@@ -45,7 +44,7 @@ const connectDB = async () => {
 
 ////////////// Middlewares ////////////////// bot.use(fn(ctx, next))
 //Menu
-bot.use(menu);
+bot.use(menuCRUD);
 //Auth Control
 //After this we pass ctx as EvelateContext Type
 bot.use(async (ctx: any, next: Function) => {

@@ -1,6 +1,6 @@
 import { sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
-import { menu } from "../utils/keyboard";
+import { menuCRUD } from "../utils/Menu";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -36,8 +36,8 @@ export const gifHandler = async function (ctx: any) {
     ) {
       await sendMessage(
         ctx,
-        "This Gif was saved before, you can change the index or delete this gif ",
-        menu
+        "This Gif was saved before, you can change the index or delete this GIF ",
+        menuCRUD
       );
       return;
     }
