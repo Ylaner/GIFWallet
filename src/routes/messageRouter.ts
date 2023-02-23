@@ -1,7 +1,7 @@
-import { messageControll } from "../controllers/messageControll";
+import { messageHandler } from "../controllers/messageControll";
 export const messageRouter = async function (ctx: any) {
   try {
-    await messageControll(ctx);
+    await messageHandler(ctx);
   } catch (err) {
     console.log(err);
   }

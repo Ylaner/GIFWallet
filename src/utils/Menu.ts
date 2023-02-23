@@ -1,5 +1,10 @@
 import { Menu } from "@grammyjs/menu";
-import { buttonObj, buttonsArray } from "../Types/Types";
+import { userAuth } from "../controllers/authControll";
+import { searchForGIF } from "../controllers/gifControll";
+import { sendMessage } from "../controllers/handlerFactory";
+import { Gif } from "../models/gifModel";
+
+import { buttonObj, buttonsArray, GIFType, UserData } from "../Types/Types";
 
 // .text("EDIT", (ctx: any) => {})
 // .text("DELETE", (ctx) => ctx.reply("You pressed B!"))
@@ -22,8 +27,21 @@ export const menuCRUD = menuMaker("menuCRUD", [
   {
     name: "EDIT",
     hasRow: false,
-    action: (ctx: any) => {
-      ctx.reply("you click on EDIT");
+    action: async (ctx: any) => {
+      await userAuth(ctx);
+      const newUser: UserData = ctx.user.toObject();
+      const gif: GIFType = await searchForGIF(
+        newUser.userOnStage.details,
+        newUser._id
+      );
+      console.log(`newUser : ${newUser}`);
+      console.log(`gif : ${gif}`);
+      newUser.userOnStage = {
+        stageName: "EDIT",
+        details: gif.gifUniqueId,
+      };
+      await ctx.user.updateOne(newUser);
+      await sendMessage(ctx, "Send a new index for your GIF");
     },
   },
   {

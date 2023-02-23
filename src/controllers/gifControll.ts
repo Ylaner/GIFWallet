@@ -1,26 +1,20 @@
 import { sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
 import { menuCRUD } from "../utils/Menu";
+import { GIFType } from "../Types/Types";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
 export const gifHandler = async function (ctx: any) {
   try {
     console.log("Gif controll triggerd");
-    console.log(ctx.update.message?.animation);
-
     const stageName = ctx.user.userOnStage.stageName;
     //booleans
     const isItGifPending = stageName === ctx.stageEnums.GIF_PENDING;
-    const isItNew = stageName === ctx.stageEnums.NEW;
-    const isItGifSaved = stageName === ctx.stageEnums.GIF_SAVED;
+    const isItEDIT = stageName === ctx.stageEnums.EDIT;
     //////////////////////////////////////////////////////////
     //Can save new gif?
-    if (
-      isItGifPending === false &&
-      isItNew === false &&
-      isItGifSaved === false
-    ) {
+    if (isItGifPending === false && isItEDIT === false) {
       if (stageName === "MESSAGE_PENDING") {
         await sendMessage(
           ctx,
@@ -31,17 +25,20 @@ export const gifHandler = async function (ctx: any) {
     }
     /////////////////////////////////////////////////////////////
     //Check the gif not saved before
-    if (
-      await searchForGIF(ctx.message?.animation?.file_unique_id, ctx.user._id)
-    ) {
+    const gif: GIFType = await searchForGIF(
+      ctx.message?.animation?.file_unique_id,
+      ctx.user._id
+    );
+    if (gif) {
+      console.log("SUUUUUUUUUUUU");
       await sendMessage(
         ctx,
-        "This Gif was saved before, you can change the index or delete this GIF ",
+        `This Gif was saved before with the key: ${gif.key} `,
         menuCRUD
       );
       return;
     }
-    const user: any = ctx.user;
+    const newUser: any = ctx.user.toObject();
     const gifId: string = ctx.message?.animation?.file_id!;
     const gifUniqueId: string = ctx.message?.animation?.file_unique_id!;
 
@@ -60,11 +57,11 @@ export const gifHandler = async function (ctx: any) {
     };
     await Gif.create(gifObject);
     //Update the user stage
-    user.userOnStage = {
+    newUser.userOnStage = {
       stageName: ctx.stageEnums.MESSAGE_PENDING,
       details: gifUniqueId,
     };
-    await user.save();
+    await ctx.user.updateOne(newUser);
     await sendMessage(ctx, "Thanks");
     //   await ctx.replyWithAnimation(ctx.gifData);
     await sendMessage(ctx, "Please send a message for the gif:");
