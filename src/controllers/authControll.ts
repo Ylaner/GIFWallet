@@ -39,3 +39,7 @@ export const userCreate = async (userData: UserData) => {
     console.log(err);
   }
 };
+
+export const userUpdate = async (query: any, newData: object) => {
+  await query.updateOne(newData);
+};
