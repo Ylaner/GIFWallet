@@ -46,6 +46,7 @@ const connectDB = async () => {
 //Menu
 bot.use(menuCRUD);
 //Auth Control
+
 //After this we pass ctx as EvelateContext Type
 bot.use(async (ctx: any, next: Function) => {
   try {
