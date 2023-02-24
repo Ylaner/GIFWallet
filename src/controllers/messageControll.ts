@@ -1,6 +1,6 @@
 import { sendMessage } from "./handlerFactory";
 import { searchForGIF } from "./gifControll";
-import { GIFType } from "../Types/Types";
+import { GIFType } from "../utils/types";
 //////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////

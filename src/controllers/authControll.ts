@@ -1,7 +1,7 @@
-import { UserData } from "../Types/Types";
 import { stageEnums } from "../utils/enums";
 import { User } from "../models/userModel";
 import { sendMessage } from "./handlerFactory";
+import { UserData } from "../utils/types";
 ////////////////////////////////////////////
 
 ////////////////////////////////////////////

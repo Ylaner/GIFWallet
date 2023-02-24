@@ -1,8 +1,8 @@
 import { sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
-import { menuCRUD } from "../utils/Menu";
-import { GIFType } from "../Types/Types";
+import { GIFType } from "../utils/types";
 import { userUpdate } from "./authControll";
+import { menuCRUD } from "../utils/menu";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -40,13 +40,6 @@ export const isItGifExist = async (ctx: any, returnGif: boolean = false) => {
   } else {
     if (returnGif) return undefined;
     else false;
-  }
-};
-
-export const gifHandler = async function (ctx: any) {
-  try {
-  } catch (err) {
-    console.log(err);
   }
 };
 

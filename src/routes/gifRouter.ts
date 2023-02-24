@@ -1,11 +1,10 @@
 import {
   createGif,
   editAndDeleteGif,
-  gifHandler,
   gifRunValidator,
   isItGifExist,
 } from "../controllers/gifControll";
-import { GIFType } from "../Types/Types";
+import { GIFType } from "../utils/types";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////

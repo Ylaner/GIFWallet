@@ -1,7 +1,7 @@
 import { Menu } from "@grammyjs/menu";
 import { userAuth } from "../controllers/authControll";
 import { searchForGIF } from "../controllers/gifControll";
-import { buttonObj, buttonsArray, UserData } from "../Types/Types";
+import { buttonObj, buttonsArray, UserData } from "./types";
 
 // .text("EDIT", (ctx: any) => {})
 // .text("DELETE", (ctx) => ctx.reply("You pressed B!"))
