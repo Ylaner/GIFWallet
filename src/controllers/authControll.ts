@@ -16,13 +16,14 @@ export const userAuth = async function (ctx: any) {
         stageName: ctx.stageEnums.NEW,
         details: "Create new user",
       },
-    } as UserData; // !!!!!!!!!!!!! if userData = ctx.from  just copy the refrence
+    } as UserData;
 
     const id = ctx.from.id;
     let newUser = await User.findOne({ id });
 
     if (!newUser) {
       newUser = await userCreate(userData);
+      console.log(newUser);
       await sendMessage(ctx, "Welcome,I will be wait for your first GIF");
     }
     //passing the query
@@ -34,7 +35,8 @@ export const userAuth = async function (ctx: any) {
 
 export const userCreate = async (userData: UserData) => {
   try {
-    await User.create(userData);
+    const user = await User.create(userData);
+    return user;
   } catch (err) {
     console.log(err);
   }
