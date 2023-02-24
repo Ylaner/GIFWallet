@@ -29,7 +29,7 @@ export const updateKey = async (ctx: any) => {
   const keys2 = ctx.message.text.split(" ");
   newGif.key = keys2;
   await gif.updateOne(newGif);
-  sendMessage(ctx, "Your gif is edited");
+  await sendMessage(ctx, "Your gif is edited");
   newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
   newUser.userOnStage.details = null;
   await ctx.user.updateOne(newUser);
