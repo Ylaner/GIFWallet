@@ -17,7 +17,7 @@ const menuMaker = function (menuKey: string, buttonsArray: buttonsArray) {
   if (buttonsArray != null)
     buttonsArray.forEach((buttonObj: buttonObj) => {
       menu.text(buttonObj.name, buttonObj.action);
-      if (buttonObj.hasRow === true) menu.row;
+      if (buttonObj.hasRow === true) menu.row();
     });
 
   return menu;
@@ -28,26 +28,25 @@ export const menuCRUD = menuMaker("menuCRUD", [
     name: "EDIT",
     hasRow: false,
     action: async (ctx: any) => {
-      await userAuth(ctx);
-      const newUser: UserData = ctx.user.toObject();
-      const gif: GIFType = await searchForGIF(
-        newUser.userOnStage.details,
-        newUser._id
-      );
-      console.log(`newUser : ${newUser}`);
-      console.log(`gif : ${gif}`);
-      newUser.userOnStage = {
-        stageName: "EDIT",
-        details: gif.gifUniqueId,
-      };
-      await ctx.user.updateOne(newUser);
       await sendMessage(ctx, "Send a new index for your GIF");
     },
   },
   {
     name: "DELETE",
-    hasRow: false,
-    action: (ctx: any) => {},
+    hasRow: true,
+    action: async (ctx: any) => {
+      await userAuth(ctx);
+      const newUser: UserData = ctx.user.toObject();
+      const gif: any = await searchForGIF(
+        newUser.userOnStage.details,
+        newUser._id
+      );
+      await gif.deleteOne();
+      newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
+      newUser.userOnStage.details = "";
+      await ctx.user.updateOne(newUser);
+      await sendMessage(ctx, "Your GIF was deleted");
+    },
   },
   {
     name: "CANCEL",

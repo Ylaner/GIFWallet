@@ -11,10 +11,17 @@ export const gifHandler = async function (ctx: any) {
     const stageName = ctx.user.userOnStage.stageName;
     //booleans
     const isItGifPending = stageName === ctx.stageEnums.GIF_PENDING;
-    const isItEDIT = stageName === ctx.stageEnums.EDIT;
+    const isItEdit = stageName === ctx.stageEnums.EDIT;
+    const isItNew = stageName === ctx.stageEnums.NEW;
+    const isItGifSaved = stageName === ctx.stageEnums.GIF_SAVED;
     //////////////////////////////////////////////////////////
-    //Can save new gif?
-    if (isItGifPending === false && isItEDIT === false) {
+    //Can save new gif or Edit?
+    if (
+      isItGifPending === false &&
+      isItEdit === false &&
+      isItNew === false &&
+      isItGifSaved == false
+    ) {
       if (stageName === "MESSAGE_PENDING") {
         await sendMessage(
           ctx,
@@ -30,7 +37,13 @@ export const gifHandler = async function (ctx: any) {
       ctx.user._id
     );
     if (gif) {
-      console.log("SUUUUUUUUUUUU");
+      //If gif is exist send the menu
+      await ctx.user.updateOne({
+        userOnStage: {
+          stageName: "EDIT",
+          details: gif.gifUniqueId,
+        },
+      });
       await sendMessage(
         ctx,
         `This Gif was saved before with the key: ${gif.key} `,
