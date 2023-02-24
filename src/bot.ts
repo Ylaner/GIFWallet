@@ -12,7 +12,7 @@ import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
 import { webhookCallback } from "grammy";
-import { menuCRUD } from "./utils/menu";
+import { menuCRUD } from "./utils/menu.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////
 const app = express();
