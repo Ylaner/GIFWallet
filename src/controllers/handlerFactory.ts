@@ -1,5 +1,3 @@
-import { Gif } from "../models/gifModel";
-
 export const sendMessage = async function (
   ctx: any,
   message: string,

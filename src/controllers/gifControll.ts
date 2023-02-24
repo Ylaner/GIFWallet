@@ -2,7 +2,7 @@ import { sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
 import { GIFType } from "../utils/types";
 import { userUpdate } from "./authControll";
-import { menuCRUD } from "../utils/menu.js";
+import { menuCRUD } from "../utils/menu";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////

@@ -5,14 +5,14 @@ const express = require("express");
 //////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////
-import { errorHandler } from "./controllers/errorControll.js";
+import { errorHandler } from "./controllers/errorControll";
 import { userAuth } from "./controllers/authControll";
 import { commandRouter } from "./routes/commandRouter";
 import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
 import { webhookCallback } from "grammy";
-import { menuCRUD } from "./utils/menu.js";
+import { menuCRUD } from "./utils/menu";
 
 //////////////////////////////////////////////////////////////////////////////////////////
 const app = express();
