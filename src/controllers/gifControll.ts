@@ -3,30 +3,24 @@ import { Gif } from "../models/gifModel";
 import { GIFType } from "../utils/types";
 import { userUpdate } from "./authControll";
 import { menuCRUD } from "../utils/Menu";
+import { GIFClass } from "../utils/gifClass";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
-export const gifRunValidator = async (ctx: any) => {
+export const canSaveNewGif = async (ctx: any) => {
   const stageName = ctx.user.userOnStage.stageName;
   //booleans
   const isItGifPending = stageName === ctx.stageEnums.GIF_PENDING;
   const isItEdit = stageName === ctx.stageEnums.EDIT;
   const isItNew = stageName === ctx.stageEnums.NEW;
   const isItGifSaved = stageName === ctx.stageEnums.GIF_SAVED;
-  if (
-    isItGifPending === false &&
-    isItEdit === false &&
-    isItNew === false &&
-    isItGifSaved == false
-  ) {
-    if (stageName === "MESSAGE_PENDING") {
-      await sendMessage(
-        ctx,
-        "you've send another gif before,\nplease send a key for that gif first"
-      );
-    }
+  if (!isItGifPending && !isItEdit && !isItNew && !isItGifSaved) {
+    await sendMessage(
+      ctx,
+      "you've send another gif before,\nplease send a key for that gif first"
+    );
     return false;
-  }
+  } else return true;
 };
 
 export const isItGifExist = async (ctx: any, returnGif: boolean = false) => {
@@ -80,21 +74,14 @@ export const createGif = async (ctx: any) => {
   const newUser: any = ctx.user.toObject();
   const gifId: string = ctx.message?.animation?.file_id!;
   const gifUniqueId: string = ctx.message?.animation?.file_unique_id!;
-
-  const gifObject: {
-    gifId: string;
-    gifUniqueId: string;
-    userId: any;
-    user: any;
-    key: null | string;
-  } = {
-    gifId: gifId,
-    gifUniqueId: gifUniqueId,
-    userId: ctx.user.id,
-    user: ctx.user._id,
-    key: null,
-  };
-  await Gif.create(gifObject);
+  const gif = new GIFClass(
+    gifId,
+    gifUniqueId,
+    ctx.user._id,
+    ctx.user.id,
+    undefined
+  );
+  await Gif.create(gif);
   //Update the user stage
   newUser.userOnStage = {
     stageName: ctx.stageEnums.MESSAGE_PENDING,

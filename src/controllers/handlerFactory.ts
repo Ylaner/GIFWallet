@@ -17,3 +17,6 @@ export const wait = function (seconds: number) {
   });
 };
 //////////////////////////////
+export const createOne = async function (Model: any, object: any) {
+  await Model.create(object);
+};
