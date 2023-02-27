@@ -58,6 +58,16 @@ bot.use(async (ctx: any, next: Function) => {
   }
 });
 
+// const deleteData = async function () {
+//   try {
+//     await Gif.deleteMany();
+//     console.log("data succesfully deleted");
+//   } catch (error) {
+//     console.error(error);
+//   }
+//   process.exit();
+// };
+// deleteData();
 ////////////// Commands ////////////////////// bot.command
 commandRouter(bot);
 
