@@ -9,18 +9,20 @@ import {
 export const gifRouter = async function (ctx: any) {
   try {
     console.log("gifRouter triggerd");
+    const gif =
+      ctx.message?.animation || ctx.update.message.reply_to_message.animation;
     switch (ctx.user.userOnStage?.stageName) {
       case ctx.stageEnums.GIF_PENDING:
-        saveNewGifOnDatabase(ctx);
+        saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.EDIT:
-        saveNewGifOnDatabase(ctx);
+        saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.NEW:
-        saveNewGifOnDatabase(ctx);
+        saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.GIF_SAVED:
-        saveNewGifOnDatabase(ctx);
+        saveNewGifOnDatabase(ctx, gif);
         break;
       default:
         cantSaveNewGifMessage(ctx);
