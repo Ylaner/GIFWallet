@@ -1,27 +1,31 @@
 import {
-  canSaveNewGif,
-  createGif,
-  editAndDeleteGif,
-  isItGifExist,
+  cantSaveNewGifMessage,
+  saveNewGifOnDatabase,
 } from "../controllers/gifControll";
-import { GIFType } from "../utils/types";
+
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
 export const gifRouter = async function (ctx: any) {
   try {
     console.log("gifRouter triggerd");
-    //Can save new gif or Edit?
-    const canSaveNewGIF = await canSaveNewGif(ctx);
-    if (!canSaveNewGIF) return;
-    //Check the gif not saved before
-    const gif: GIFType = await isItGifExist(ctx, true);
-    //If gif is exist before send the menu
-    if (gif) {
-      await editAndDeleteGif(ctx, gif);
-      return;
+    switch (ctx.user.userOnStage?.stageName) {
+      case ctx.stageEnums.GIF_PENDING:
+        saveNewGifOnDatabase(ctx);
+        break;
+      case ctx.stageEnums.EDIT:
+        saveNewGifOnDatabase(ctx);
+        break;
+      case ctx.stageEnums.NEW:
+        saveNewGifOnDatabase(ctx);
+        break;
+      case ctx.stageEnums.GIF_SAVED:
+        saveNewGifOnDatabase(ctx);
+        break;
+      default:
+        cantSaveNewGifMessage(ctx);
+        break;
     }
-    await createGif(ctx);
   } catch (err) {
     console.log(err);
   }

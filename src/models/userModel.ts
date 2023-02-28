@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
   userOnStage: {
     stageName: {
       type: String,
-      enum: ["NEW", "GIF_PENDING", "MESSAGE_PENDING", "GIF_SAVED"],
+      enum: ["NEW", "GIF_PENDING", "WAIT_FOR_INDEX", "GIF_SAVED"],
       default: "NEW",
     },
     details: { type: String },

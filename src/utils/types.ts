@@ -1,5 +1,5 @@
 // type Ctx<Context> = Partial<Context> & {
-//   stageEnums: {"NEW" | "GIF_PENDING" | "MESSAGE_PENDING" | "GIF_SAVED"};
+//   stageEnums: {"NEW" | "GIF_PENDING" | "WAIT_FOR_INDEX" | "GIF_SAVED"};
 // };
 
 export type UserData = {
@@ -11,7 +11,7 @@ export type UserData = {
   language_code: string;
   username: string;
   userOnStage: {
-    stageName: "NEW" | "GIF_PENDING" | "MESSAGE_PENDING" | "GIF_SAVED" | "EDIT";
+    stageName: "NEW" | "GIF_PENDING" | "WAIT_FOR_INDEX" | "GIF_SAVED" | "EDIT";
     details: string;
   };
 };
@@ -29,7 +29,7 @@ export type UserData = {
 //       stageName:
 //         | "NEW"
 //         | "GIF_PENDING"
-//         | "MESSAGE_PENDING"
+//         | "WAIT_FOR_INDEX"
 //         | "GIF_SAVED"
 //         | "EDIT";
 //       details: any;
@@ -39,7 +39,7 @@ export type UserData = {
 //   stageEnums: {
 //     NEW: "NEW";
 //     GIF_PENDING: "GIF_PENDING";
-//     MESSAGE_PENDING: "MESSAGE_PENDING";
+//     WAIT_FOR_INDEX: "WAIT_FOR_INDEX";
 //     GIF_SAVED: "GIF_SAVED";
 //     EDIT: "EDIT";
 //   };
@@ -81,7 +81,7 @@ export type buttonsArray = buttonObj[];
 export type GIFType = {
   gifId: string;
   gifUniqueId: string;
-  user: any;
+  userObjectId: string;
   userId: number;
-  key: string[];
+  key?: string[];
 };

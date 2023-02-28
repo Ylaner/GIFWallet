@@ -4,7 +4,7 @@ export const inlineQueriesControll = async function (ctx: any) {
   console.log("inlineQueriesControll triggerd");
   const query = ctx.update.inline_query?.query!;
   // Test
-  const arrayOfQuery = query.split(" ");
+  const arrayOfQuery = query.toLowerCase().split(" ");
   console.log(`query: ${arrayOfQuery} and userId : ${ctx.user._id} `);
 
   const gifs = await Gif.find({
