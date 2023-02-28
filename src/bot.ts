@@ -74,7 +74,7 @@ commandRouter(bot);
 
 ///////////////// Listeners //////////////// bot.on("message" , fn() )
 bot.on(":animation", async (ctx: any) => {
-  if (ctx.message.chat !== "private") return;
+  if (ctx.message.chat.type !== "private") return;
   try {
     await gifRouter(ctx);
   } catch (err) {
@@ -149,7 +149,8 @@ bot.command("save", async (ctx) => {
 });
 
 bot.on("msg:text", async (ctx: any) => {
-  if (ctx.message.chat !== "private") return;
+  console.log(ctx.message.chat);
+  if (ctx.message.chat.type !== "private") return;
   await messageRouter(ctx);
 });
 
