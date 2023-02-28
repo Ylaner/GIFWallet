@@ -70,7 +70,7 @@ bot.use(async (ctx: any, next: Function) => {
 // };
 // deleteData();
 ////////////// Commands ////////////////////// bot.command
-commandRouter(bot);
+// commandRouter(bot);
 
 ///////////////// Listeners //////////////// bot.on("message" , fn() )
 bot.on(":animation", async (ctx: any) => {
