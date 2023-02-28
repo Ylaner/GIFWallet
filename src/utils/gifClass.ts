@@ -1,8 +1,9 @@
 import { userUpdate } from "../controllers/authControll";
 import { searchForGIF } from "../controllers/gifControll";
 import { sendMessage, createOne } from "../controllers/handlerFactory";
-import { Gif } from "../models/gifModel";
+
 import { menuCRUD } from "./Menu";
+import { GIFType } from "./types";
 
 export class GIFClass {
   private readonly gifId: string;
@@ -10,18 +11,13 @@ export class GIFClass {
   private readonly userObjectId: any;
   private readonly userId: number;
   private key: string[] | undefined;
-  constructor(
-    gifId: string,
-    gifUniqueId: string,
-    userObjectId: string,
-    userId: number,
-    key?: string[]
-  ) {
-    this.gifId = gifId;
-    this.gifUniqueId = gifUniqueId;
-    this.userObjectId = userObjectId;
-    this.userId = userId;
-    if (key) this.key = key.map((e) => e);
+  constructor(source: GIFType) {
+    console.log(source.gifId);
+    this.gifId = source.gifId;
+    this.gifUniqueId = source.gifUniqueId;
+    this.userObjectId = source.userObjectId;
+    this.userId = source.userId;
+    if (source.key) this.key = source.key.map((e) => e);
   }
   //how to make a copy constructor?
   //getters
