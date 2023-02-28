@@ -12,16 +12,16 @@ export const gifRouter = async function (ctx: any) {
     const gif = ctx.message.animation;
     switch (ctx.user.userOnStage?.stageName) {
       case ctx.stageEnums.GIF_PENDING:
-        saveNewGifOnDatabase(ctx, gif);
+        await saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.EDIT:
-        saveNewGifOnDatabase(ctx, gif);
+        await saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.NEW:
-        saveNewGifOnDatabase(ctx, gif);
+        await saveNewGifOnDatabase(ctx, gif);
         break;
       case ctx.stageEnums.GIF_SAVED:
-        saveNewGifOnDatabase(ctx, gif);
+        await saveNewGifOnDatabase(ctx, gif);
         break;
       default:
         cantSaveNewGifMessage(ctx);
