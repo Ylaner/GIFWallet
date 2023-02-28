@@ -27,7 +27,7 @@ export class GIFClass {
   public get getGifUniqueId(): string {
     return this.gifUniqueId;
   }
-  public get getUser(): string {
+  public get getUserObjectId(): string {
     return this.userObjectId;
   }
   public get getUserId(): number {

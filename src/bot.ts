@@ -1,16 +1,18 @@
-const grammy = require("grammy");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const express = require("express");
 //////////////////////////////////////////////////////////////////////////////////////////
 
-import { errorHandler } from "./controllers/errorControll";
+import { Bot, webhookCallback } from "grammy";
 import { userAuth } from "./controllers/authControll";
+import { errorHandler } from "./controllers/errorControll";
+import { saveNewGifOnDatabase } from "./controllers/gifControll";
+import { sendMessage } from "./controllers/handlerFactory";
+import { Gif } from "./models/gifModel";
 import { commandRouter } from "./routes/commandRouter";
 import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
 import { messageRouter } from "./routes/messageRouter";
-import { webhookCallback } from "grammy";
 import { menuCRUD } from "./utils/Menu";
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +26,7 @@ process.on("uncaughtException", (err) => {
 dotenv.config({ path: "./config.env" });
 //////////////////////////////////////////////////////////////////////////////////////////
 const telegramToken = process.env.TELEGRAM_API_TOKEN!;
-const bot = new grammy.Bot(telegramToken);
+const bot = new Bot(telegramToken);
 
 errorHandler(bot);
 const envDatabase = process.env.DATABASE!;
@@ -77,6 +79,71 @@ bot.on(":animation", async (ctx: any) => {
   } catch (err) {
     console.error("Error occurred", err);
   }
+});
+
+// ctx.update.message = {
+//   message_id: 330,
+//   from: {
+//     id: 5387340288,
+//     is_bot: false,
+//     first_name: 'Yasin ᅠ',
+//     username: 'Y_Laner',
+//     language_code: 'en'
+//   },
+//   chat: { id: -1001575778436, title: 'YlanerShare', type: 'supergroup' },
+//   date: 1677587519,
+//   message_thread_id: 322,
+//   reply_to_message: {
+//     message_id: 322,
+//     from: {
+//       id: 5387340288,
+//       is_bot: false,
+//       first_name: 'Yasin ᅠ',
+//       username: 'Y_Laner',
+//       language_code: 'en'
+//     },
+//     chat: { id: -1001575778436, title: 'YlanerShare', type: 'supergroup' },
+//     date: 1677586740,
+//     animation: {
+//       mime_type: 'video/mp4',
+//       duration: 1,
+//       width: 480,
+//       height: 318,
+//       thumb: [Object],
+//       file_id: 'CgACAgQAAx0CXex4hAACAUJj_fE6xpR9833MQELgEmhNVGnwygAC2QwAAltQ0VKL8zwYbErSAi4E',
+//       file_unique_id: 'AgAD2QwAAltQ0VI',
+//       file_size: 8904
+//     },
+//     document: {
+//       mime_type: 'video/mp4',
+//       thumb: [Object],
+//       file_id: 'CgACAgQAAx0CXex4hAACAUJj_fE6xpR9833MQELgEmhNVGnwygAC2QwAAltQ0VKL8zwYbErSAi4E',
+//       file_unique_id: 'AgAD2QwAAltQ0VI',
+//       file_size: 8904
+//     }
+//   },
+//   text: '/save',
+//   entities: [ { offset: 0, length: 5, type: 'bot_command' } ]
+// }
+bot.command("save", async (ctx) => {
+  const data = ctx.message!;
+  if (data.chat.type === "private") {
+    await sendMessage(ctx, "This commend is only for the groups.");
+    return;
+  }
+  if (!data.reply_to_message) {
+    await sendMessage(ctx, "Please reply on a gif.");
+    return;
+  }
+  let key: string[] = [""];
+  const gif = data.reply_to_message.animation;
+  key = data.text?.split("/save ")[1].split(" ");
+  if (!key[0]) {
+    sendMessage(ctx, "please send your key after /save");
+    return;
+  }
+  console.log(key);
+  saveNewGifOnDatabase(ctx, gif, key);
 });
 
 bot.on("msg:text", async (ctx: any) => {

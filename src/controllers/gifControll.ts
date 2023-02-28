@@ -1,15 +1,26 @@
-import { sendMessage } from "./handlerFactory";
+import { createOne, sendMessage } from "./handlerFactory";
 import { Gif } from "../models/gifModel";
 import { GIFClass } from "../utils/gifClass";
+import { GIFType } from "../utils/types";
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
-export const saveNewGifOnDatabase = async (ctx: any) => {
+export const saveNewGifOnDatabase = async (
+  ctx: any,
+  gifSource: any,
+  key: undefined | string[] = undefined
+) => {
+  console.log(gifSource);
+  const gifRecivedData = gifSource!;
+  const gif = new GIFClass({
+    gifId: gifRecivedData.file_id,
+    gifUniqueId: gifRecivedData.file_unique_id,
+    userObjectId: ctx.user._id,
+    userId: ctx.user.id,
+    key,
+  });
   //Check the gif not saved before
-  const gifQuery = await searchForGIF(
-    ctx.message?.animation?.file_unique_id,
-    ctx.user._id
-  );
+  const gifQuery = await searchForGIF(gif.getGifUniqueId, gif.getUserObjectId);
   if (gifQuery) {
     const gif = new GIFClass(gifQuery);
     const isItGifOnDatabase = await gif.isItGifOnDatabase(ctx);
@@ -18,7 +29,24 @@ export const saveNewGifOnDatabase = async (ctx: any) => {
       await gif.editGif(ctx);
       return;
     }
-  } else await createGif(ctx);
+  } else {
+    await createOne(Gif, gif);
+    //Update the user stage
+    console.log(gif.getGifUniqueId);
+    if (!key) {
+      //for private
+      const newUser: any = ctx.user.toObject();
+      newUser.userOnStage = {
+        stageName: ctx.stageEnums.WAIT_FOR_INDEX,
+        details: gif.getGifUniqueId,
+      };
+      await ctx.user.updateOne(newUser);
+      await sendMessage(ctx, "Please send a message for the gif:");
+    } else {
+      //for groups
+      await sendMessage(ctx, "Saved");
+    }
+  }
 };
 
 export const cantSaveNewGifMessage = async (ctx: any) => {
@@ -45,29 +73,4 @@ export const searchForGIF = async function (
   } catch (err) {
     console.log(err);
   }
-};
-
-export const createGif = async (ctx: any) => {
-  const newUser: any = ctx.user.toObject();
-  const gifId: string = ctx.message?.animation?.file_id!;
-  const gifUniqueId: string = ctx.message?.animation?.file_unique_id!;
-  console.log(gifId);
-
-  const gif = new GIFClass({
-    gifId,
-    gifUniqueId,
-    userObjectId: ctx.user._id,
-    userId: ctx.user.id,
-    key: undefined,
-  });
-
-  await Gif.create(gif);
-  //Update the user stage
-  newUser.userOnStage = {
-    stageName: ctx.stageEnums.WAIT_FOR_INDEX,
-    details: gifUniqueId,
-  };
-  await ctx.user.updateOne(newUser);
-  //   await ctx.replyWithAnimation(ctx.gifData);
-  await sendMessage(ctx, "Please send a message for the gif:");
 };
