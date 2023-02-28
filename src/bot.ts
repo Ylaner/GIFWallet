@@ -136,10 +136,11 @@ bot.command("save", async (ctx) => {
     await sendMessage(ctx, "Please reply on a gif.");
     return;
   }
-  let key: string[] = [""];
+  let key;
   const gif = data.reply_to_message.animation;
-  key = data.text?.split("/save ")[1].split(" ");
-  if (!key[0]) {
+  key = data.text.split("/save ")[1]?.split(" ");
+  console.log(key);
+  if (!key) {
     await sendMessage(ctx, "please send your key after /save");
     return;
   }

@@ -22,6 +22,10 @@ export const saveNewGifOnDatabase = async (
   //Check the gif not saved before
   const gifQuery = await searchForGIF(gif.getGifUniqueId, gif.getUserObjectId);
   if (gifQuery) {
+    if (key) {
+      sendMessage(ctx, "This GIF saved before");
+      return;
+    }
     const gif = new GIFClass(gifQuery);
     const isItGifOnDatabase = await gif.isItGifOnDatabase(ctx);
     //If gif is exist send the menu
