@@ -81,7 +81,7 @@ export type buttonsArray = buttonObj[];
 export type GIFType = {
   gifId: string;
   gifUniqueId: string;
-  user: any;
+  userObjectId: any;
   userId: number;
   key: string[];
 };

@@ -23,24 +23,10 @@ export const canSaveNewGif = async (ctx: any) => {
   } else return true;
 };
 
-export const isItGifExist = async (ctx: any, returnGif: boolean = false) => {
-  const gif = await searchForGIF(
-    ctx.message?.animation?.file_unique_id,
-    ctx.user._id
-  );
-  if (gif) {
-    if (returnGif) return gif;
-    else true;
-  } else {
-    if (returnGif) return undefined;
-    else false;
-  }
-};
-
 export const searchForGIF = async function (
   gifUniqueId: string,
   user: string | number,
-  index = null
+  index: string | undefined = undefined
 ) {
   try {
     console.log(`gifId : ${gifUniqueId}`);
@@ -54,20 +40,6 @@ export const searchForGIF = async function (
   } catch (err) {
     console.log(err);
   }
-};
-
-export const editAndDeleteGif = async (ctx: any, gif: GIFType) => {
-  const newUser = ctx.user.toObject();
-  newUser.userOnStage = {
-    stageName: "EDIT",
-    details: gif.gifUniqueId,
-  };
-  await userUpdate(ctx.user, newUser);
-  await sendMessage(
-    ctx,
-    `This Gif was saved before with the key: ${gif.key} `,
-    menuCRUD
-  );
 };
 
 export const createGif = async (ctx: any) => {

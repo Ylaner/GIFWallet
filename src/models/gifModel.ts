@@ -11,7 +11,7 @@ const gifSchema = new mongoose2.Schema(
       required: [true, "Gif must have uniqueGifId"],
     },
 
-    user: {
+    userObjectId: {
       type: mongoose2.Schema.ObjectId,
       ref: "User",
       required: [true, "Gif must belong to a user"],

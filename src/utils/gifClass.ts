@@ -1,4 +1,5 @@
 import { userUpdate } from "../controllers/authControll";
+import { searchForGIF } from "../controllers/gifControll";
 import { sendMessage, createOne } from "../controllers/handlerFactory";
 import { Gif } from "../models/gifModel";
 import { menuCRUD } from "./Menu";
@@ -6,22 +7,23 @@ import { menuCRUD } from "./Menu";
 export class GIFClass {
   private readonly gifId: string;
   private readonly gifUniqueId: string;
-  private readonly user: any;
+  private readonly userObjectId: any;
   private readonly userId: number;
   private key: string[] | undefined;
   constructor(
     gifId: string,
     gifUniqueId: string,
-    user: any,
+    userObjectId: string,
     userId: number,
     key?: string[]
   ) {
     this.gifId = gifId;
     this.gifUniqueId = gifUniqueId;
-    this.user = user;
+    this.userObjectId = userObjectId;
     this.userId = userId;
-    if (key) this.key = { ...key };
+    if (key) this.key = key.map((e) => e);
   }
+  //how to make a copy constructor?
   //getters
   public get getGifId(): string {
     return this.gifId;
@@ -30,47 +32,31 @@ export class GIFClass {
     return this.gifUniqueId;
   }
   public get getUser(): string {
-    return this.user;
+    return this.userObjectId;
   }
   public get getUserId(): number {
     return this.userId;
   }
   public get getKey(): string[] | undefined {
-    if (this.key) return { ...this.key };
+    if (this.key) return this.key.map((e) => e);
     else return undefined;
   }
 
   //setters
   public set value(key: string[]) {
     if (!key) this.key = [];
-    this.key = new Array(...key);
+    this.key = key.map((e) => e);
   }
 
   //actions
 
   isItGifOnDatabase = async (ctx: any) => {
-    const gif = await this.searchForGIF(this.gifUniqueId, ctx.user._id);
+    const gif = await searchForGIF(this.gifUniqueId, ctx.user._id);
     if (gif) return true;
     else return false;
   };
 
-  searchForGIF = async function (
-    this: GIFClass,
-    user: string | number,
-    index = undefined
-  ) {
-    const gifUniqueId = this.gifUniqueId;
-    console.log(`gifId : ${gifUniqueId}`);
-    console.log(`userId : ${user}`);
-    const gif = await Gif.findOne({
-      gifUniqueId,
-      user,
-    });
-    if (gif) return gif;
-    else return undefined;
-  };
-
-  editAndDeleteGif = async function (this: GIFClass, ctx: any) {
+  editGif = async function (this: GIFClass, ctx: any) {
     const newUser = ctx.user.toObject();
     newUser.userOnStage = {
       stageName: "EDIT",
@@ -82,20 +68,6 @@ export class GIFClass {
       `This Gif was saved before with the key: ${this.key} `,
       menuCRUD
     );
-  };
-  createGif = async function (this: GIFClass, ctx: any) {
-    const newUser: any = ctx.user.toObject();
-
-    const gifObject: GIFClass = this;
-    await createOne(Gif, gifObject);
-    //Update the user stage
-    newUser.userOnStage = {
-      stageName: ctx.stageEnums.MESSAGE_PENDING,
-      details: this.gifUniqueId,
-    };
-    await ctx.user.updateOne(newUser);
-    //   await ctx.replyWithAnimation(ctx.gifData);
-    await sendMessage(ctx, "Please send a message for the gif:");
   };
 }
 ////////////////////////////////////////////////////////////////

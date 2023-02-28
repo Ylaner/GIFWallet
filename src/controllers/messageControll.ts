@@ -1,6 +1,7 @@
 import { sendMessage } from "./handlerFactory";
 import { searchForGIF } from "./gifControll";
 import { GIFType } from "../utils/types";
+import { GIFClass } from "../utils/gifClass";
 //////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////
@@ -24,11 +25,17 @@ export const addKey = async (ctx: any) => {
 export const updateKey = async (ctx: any) => {
   console.log("updateKey triggerd");
   const newUser = ctx.user;
-  const gif = await searchForGIF(newUser.userOnStage.details, newUser._id);
-  const newGif: GIFType = gif.toObject();
-  const keys2 = ctx.message.text.split(" ");
-  newGif.key = keys2;
-  await gif.updateOne(newGif);
+  const gifQuery = await searchForGIF(newUser.userOnStage.details, newUser._id);
+  const newGif = new GIFClass(
+    gifQuery?.gifId,
+    gifQuery?.gifUniqueId,
+    ctx?.user._id,
+    ctx.user.id,
+    ctx.message.text.split(" ")
+  );
+  console.log(newGif);
+
+  await gifQuery.updateOne(newGif);
   await sendMessage(ctx, "Your gif is edited");
   newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
   newUser.userOnStage.details = null;
