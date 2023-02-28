@@ -6,7 +6,6 @@ import { GIFClass } from "../utils/gifClass";
 ////////////////////////////////////////////////////////////////
 export const saveNewGifOnDatabase = async (ctx: any) => {
   //Check the gif not saved before
-
   const gifQuery = await searchForGIF(
     ctx.message?.animation?.file_unique_id,
     ctx.user._id
@@ -14,13 +13,14 @@ export const saveNewGifOnDatabase = async (ctx: any) => {
   if (gifQuery) {
     const gif = new GIFClass(gifQuery);
     const isItGifOnDatabase = await gif.isItGifOnDatabase(ctx);
-    //If gif is exist before send the menu
+    //If gif is exist send the menu
     if (isItGifOnDatabase) {
       await gif.editGif(ctx);
       return;
     }
   } else await createGif(ctx);
 };
+
 export const cantSaveNewGifMessage = async (ctx: any) => {
   await sendMessage(
     ctx,
@@ -60,6 +60,7 @@ export const createGif = async (ctx: any) => {
     userId: ctx.user.id,
     key: undefined,
   });
+
   await Gif.create(gif);
   //Update the user stage
   newUser.userOnStage = {

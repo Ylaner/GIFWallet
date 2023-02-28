@@ -25,8 +25,8 @@ export const menuCRUD = menuMaker("menuCRUD", [
     name: "EDIT",
     hasRow: false,
     action: async (ctx: any) => {
-      await ctx.editMessageText("Send a new index for your GIF");
       await ctx.menu.close();
+      await ctx.editMessageText("Send a new index for your GIF");
     },
   },
   {
@@ -44,8 +44,8 @@ export const menuCRUD = menuMaker("menuCRUD", [
       newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
       newUser.userOnStage.details = "";
       await ctx.user.updateOne(newUser);
-      await ctx.editMessageText("Your GIF was deleted");
       await ctx.menu.close();
+      await ctx.editMessageText("Your GIF was deleted");
     },
   },
   {
@@ -57,8 +57,8 @@ export const menuCRUD = menuMaker("menuCRUD", [
       newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
       newUser.userOnStage.details = "";
       await ctx.user.updateOne(newUser);
+      await ctx.menu.close();
       await ctx.editMessageText("Canceled");
-      ctx.menu.close();
     },
   },
 ]);
