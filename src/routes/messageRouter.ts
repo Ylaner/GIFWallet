@@ -5,6 +5,8 @@ import { addKey, updateKey } from "../controllers/messageControll";
 ///////////////////////////////////////////////////////////////////
 export const messageRouter = async function (ctx: any) {
   console.log("message Router  triggerd");
+  console.log(ctx.message);
+
   try {
     switch (ctx.user.userOnStage?.stageName) {
       case ctx.stageEnums.WAIT_FOR_INDEX:

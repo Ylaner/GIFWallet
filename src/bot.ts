@@ -74,6 +74,7 @@ commandRouter(bot);
 
 ///////////////// Listeners //////////////// bot.on("message" , fn() )
 bot.on(":animation", async (ctx: any) => {
+  if (ctx.message.chat !== "private") return;
   try {
     await gifRouter(ctx);
   } catch (err) {
@@ -81,7 +82,7 @@ bot.on(":animation", async (ctx: any) => {
   }
 });
 
-// ctx.update.message = {
+// ctx.message = {
 //   message_id: 330,
 //   from: {
 //     id: 5387340288,
@@ -147,6 +148,7 @@ bot.command("save", async (ctx) => {
 });
 
 bot.on("msg:text", async (ctx: any) => {
+  if (ctx.message.chat !== "private") return;
   await messageRouter(ctx);
 });
 
