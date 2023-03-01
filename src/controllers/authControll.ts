@@ -29,7 +29,7 @@ export const userAuth = async function (ctx: any) {
     //passing the query
     ctx.user = newUser;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -38,10 +38,14 @@ export const userCreate = async (userData: UserData) => {
     const user = await User.create(userData);
     return user;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
 export const userUpdate = async (query: any, newData: object) => {
-  await query.updateOne(newData);
+  try {
+    await query.updateOne(newData);
+  } catch (err) {
+    throw err;
+  }
 };

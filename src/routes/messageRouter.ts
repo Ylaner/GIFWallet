@@ -20,6 +20,6 @@ export const messageRouter = async function (ctx: any) {
         break;
     }
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };

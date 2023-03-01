@@ -52,13 +52,17 @@ export const menuCRUD = menuMaker("menuCRUD", [
     name: "CANCEL",
     hasRow: false,
     action: async (ctx: any) => {
-      await userAuth(ctx);
-      const newUser: UserData = ctx.user.toObject();
-      newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
-      newUser.userOnStage.details = "";
-      await ctx.user.updateOne(newUser);
-      await ctx.menu.close();
-      await ctx.editMessageText("Canceled");
+      try {
+        await userAuth(ctx);
+        const newUser: UserData = ctx.user.toObject();
+        newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
+        newUser.userOnStage.details = "";
+        await ctx.user.updateOne(newUser);
+        await ctx.menu.close();
+        await ctx.editMessageText("Canceled");
+      } catch (err) {
+        throw err;
+      }
     },
   },
 ]);

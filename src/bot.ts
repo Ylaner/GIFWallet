@@ -83,7 +83,7 @@ bot.on(":animation", async (ctx: any) => {
   try {
     await gifRouter(ctx);
   } catch (err) {
-    console.error("Error occurred", err);
+    throw err;
   }
 });
 
@@ -132,16 +132,28 @@ bot.on(":animation", async (ctx: any) => {
 //   entities: [ { offset: 0, length: 5, type: 'bot_command' } ]
 // }
 bot.command("add", async (ctx) => {
-  await commandRouter(ctx, "add");
+  try {
+    await commandRouter(ctx, "add");
+  } catch (err) {
+    throw err;
+  }
 });
 
 bot.on("msg:text", async (ctx: any) => {
-  if (ctx.message.chat.type !== "private") return;
-  await messageRouter(ctx);
+  try {
+    if (ctx.message.chat.type !== "private") return;
+    await messageRouter(ctx);
+  } catch (err) {
+    throw err;
+  }
 });
 
 bot.on("inline_query", async (ctx: any) => {
-  await inlineQueriesRouter(ctx);
+  try {
+    await inlineQueriesRouter(ctx);
+  } catch (err) {
+    throw err;
+  }
 });
 
 // Start the bot.
