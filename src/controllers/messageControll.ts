@@ -7,7 +7,6 @@ import { GIFClass } from "../utils/gifClass";
 //////////////////////////////////////////////////////////////////
 export const addKey = async (ctx: any) => {
   try {
-    console.log("addKey triggerd");
     const newUser = ctx.user;
     const gif1 = await searchForGIF(newUser.userOnStage.details, newUser._id);
     //Task 2 - Update gif.key
@@ -28,7 +27,6 @@ export const addKey = async (ctx: any) => {
 
 export const updateKey = async (ctx: any) => {
   try {
-    console.log("updateKey triggerd");
     const newUser = ctx.user;
     const newKey = ctx.message.text.toLowerCase().split(" ");
     const gifQuery = await searchForGIF(
@@ -37,7 +35,6 @@ export const updateKey = async (ctx: any) => {
     );
     gifQuery.key = newKey;
     const newGif = new GIFClass(gifQuery);
-    console.log(newGif);
 
     await gifQuery.updateOne(newGif);
     await sendMessage(ctx, "Your gif is edited");

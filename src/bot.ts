@@ -6,9 +6,6 @@ const express = require("express");
 import { Bot, webhookCallback } from "grammy";
 import { userAuth } from "./controllers/authControll";
 import { errorHandler } from "./controllers/errorControll";
-import { saveNewGifOnDatabase } from "./controllers/gifControll";
-import { sendMessage } from "./controllers/handlerFactory";
-import { Gif } from "./models/gifModel";
 import { commandRouter } from "./routes/commandRouter";
 import { gifRouter } from "./routes/gifRouter";
 import { inlineQueriesRouter } from "./routes/inlineQueriesRouter";
@@ -53,11 +50,6 @@ bot.use(menuCRUD);
 //After this we pass ctx as EvelateContext Type
 bot.use(async (ctx: any, next: Function) => {
   try {
-    // if (ctx.message.chat.type !== "private") {
-    //   const chatPermissions = await ctx.getChat();
-    //   console.log(chatPermissions.permissions);
-    //   if (chatPermissions.permissions.can_send_messages === false) return;
-    // }
     await userAuth(ctx);
     await next();
   } catch (err) {
@@ -80,8 +72,7 @@ bot.use(async (ctx: any, next: Function) => {
 // commandRouter(bot);
 
 ///////////////// Listeners //////////////// bot.on("message" , fn() )
-bot.on(":animation", async (ctx: any) => {
-  if (ctx.message.chat.type !== "private") return;
+bot.chatType("private").on(":animation", async (ctx: any) => {
   try {
     await gifRouter(ctx);
   } catch (err) {
@@ -133,7 +124,7 @@ bot.on(":animation", async (ctx: any) => {
 //   text: '/save',
 //   entities: [ { offset: 0, length: 5, type: 'bot_command' } ]
 // }
-bot.command("add", async (ctx) => {
+bot.chatType(["private", "group", "supergroup"]).command("add", async (ctx) => {
   try {
     await commandRouter(ctx, "add");
   } catch (err) {
@@ -141,9 +132,8 @@ bot.command("add", async (ctx) => {
   }
 });
 
-bot.on("msg:text", async (ctx: any) => {
+bot.chatType("private").on("msg:text", async (ctx: any) => {
   try {
-    if (ctx.message.chat.type !== "private") return;
     await messageRouter(ctx);
   } catch (err) {
     console.error(err);

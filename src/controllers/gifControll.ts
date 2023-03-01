@@ -11,7 +11,6 @@ export const saveNewGifOnDatabase = async (
   key: undefined | string[] = undefined
 ) => {
   try {
-    console.log(gifSource);
     const gifRecivedData = gifSource!;
     const gif = new GIFClass({
       gifId: gifRecivedData.file_id,
@@ -40,7 +39,6 @@ export const saveNewGifOnDatabase = async (
     } else {
       await createOne(Gif, gif);
       //Update the user stage
-      console.log(gif.getGifUniqueId);
       if (!key) {
         //for private
         const newUser: any = ctx.user.toObject();
@@ -77,8 +75,6 @@ export const searchForGIF = async function (
   index: string | undefined = undefined
 ) {
   try {
-    console.log(`gifId : ${gifUniqueId}`);
-    console.log(`userId : ${user}`);
     const gif = await Gif.findOne({
       gifUniqueId,
       user,

@@ -15,12 +15,10 @@ export const addController = async (ctx: any) => {
     let key;
     const gif = data.reply_to_message.animation;
     key = data.text.split("/add ")[1]?.split(" ");
-    console.log(key);
     if (!key) {
       await sendMessage(ctx, "please send your key after /add");
       return;
     }
-    console.log(key);
     await saveNewGifOnDatabase(ctx, gif, key);
   } catch (err) {
     console.error(err);

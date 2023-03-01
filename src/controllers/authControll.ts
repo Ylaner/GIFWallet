@@ -7,7 +7,6 @@ import { UserData } from "../utils/types";
 ////////////////////////////////////////////
 export const userAuth = async function (ctx: any) {
   try {
-    console.log("userAuth triggerd");
     ctx.stageEnums = { ...stageEnums };
 
     const userData = {
@@ -23,7 +22,6 @@ export const userAuth = async function (ctx: any) {
 
     if (!newUser) {
       newUser = await userCreate(userData);
-      console.log(newUser);
       await sendMessage(ctx, "Welcome,I will be wait for your first GIF");
     }
     //passing the query

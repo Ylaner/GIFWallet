@@ -12,7 +12,6 @@ export class GIFClass {
   private readonly userId: number;
   private key: string[] | undefined;
   constructor(source: GIFType) {
-    console.log(source.gifId);
     this.gifId = source.gifId;
     this.gifUniqueId = source.gifUniqueId;
     this.userObjectId = source.userObjectId;
