@@ -28,6 +28,6 @@ export const gifRouter = async function (ctx: any) {
         break;
     }
   } catch (err) {
-    throw(err)
+    throw err;
   }
 };
