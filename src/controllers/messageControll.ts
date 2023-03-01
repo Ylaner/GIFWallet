@@ -22,7 +22,7 @@ export const addKey = async (ctx: any) => {
     //Task 4 - Send a message and done
     await sendMessage(ctx, "Your GIF is saved.");
   } catch (err) {
-    throw err;
+    const error = err;
   }
 };
 
@@ -45,6 +45,6 @@ export const updateKey = async (ctx: any) => {
     newUser.userOnStage.details = null;
     await ctx.user.updateOne(newUser);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 };

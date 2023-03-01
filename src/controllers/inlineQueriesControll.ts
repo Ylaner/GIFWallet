@@ -29,6 +29,6 @@ export const inlineQueriesControll = async function (ctx: any) {
       // next_offset: true,
     });
   } catch (err) {
-    throw err;
+    const error = err;
   }
 };

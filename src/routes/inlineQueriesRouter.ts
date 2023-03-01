@@ -4,6 +4,6 @@ export const inlineQueriesRouter = async function (ctx: any) {
   try {
     await inlineQueriesControll(ctx);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 };

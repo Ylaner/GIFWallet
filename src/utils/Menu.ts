@@ -61,7 +61,7 @@ export const menuCRUD = menuMaker("menuCRUD", [
         await ctx.menu.close();
         await ctx.editMessageText("Canceled");
       } catch (err) {
-        throw err;
+        const error = err;
       }
     },
   },

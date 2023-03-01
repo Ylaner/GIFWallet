@@ -60,7 +60,7 @@ bot.use(async (ctx: any, next: Function) => {
     await next();
   } catch (err) {
     console.error("Error in auth middleware:", err);
-    throw err;
+    const error = err;
   }
 });
 
@@ -83,7 +83,7 @@ bot.on(":animation", async (ctx: any) => {
   try {
     await gifRouter(ctx);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 });
 
@@ -135,7 +135,7 @@ bot.command("add", async (ctx) => {
   try {
     await commandRouter(ctx, "add");
   } catch (err) {
-    throw err;
+    const error = err;
   }
 });
 
@@ -144,7 +144,7 @@ bot.on("msg:text", async (ctx: any) => {
     if (ctx.message.chat.type !== "private") return;
     await messageRouter(ctx);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 });
 
@@ -152,7 +152,7 @@ bot.on("inline_query", async (ctx: any) => {
   try {
     await inlineQueriesRouter(ctx);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 });
 

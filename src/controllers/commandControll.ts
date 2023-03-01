@@ -23,6 +23,6 @@ export const addController = async (ctx: any) => {
     console.log(key);
     await saveNewGifOnDatabase(ctx, gif, key);
   } catch (err) {
-    throw err;
+    const error = err;
   }
 };
