@@ -126,30 +126,11 @@ bot.on(":animation", async (ctx: any) => {
 //   text: '/save',
 //   entities: [ { offset: 0, length: 5, type: 'bot_command' } ]
 // }
-bot.command("save", async (ctx) => {
-  const data = ctx.message!;
-  if (data.chat.type === "private") {
-    await sendMessage(ctx, "This commend is only for the groups.");
-    return;
-  }
-  if (!data.reply_to_message) {
-    await sendMessage(ctx, "Please reply on a gif.");
-    return;
-  }
-  let key;
-  const gif = data.reply_to_message.animation;
-  key = data.text.split("/save ")[1]?.split(" ");
-  console.log(key);
-  if (!key) {
-    await sendMessage(ctx, "please send your key after /save");
-    return;
-  }
-  console.log(key);
-  await saveNewGifOnDatabase(ctx, gif, key);
+bot.command("add", async (ctx) => {
+  await commandRouter(ctx, "add");
 });
 
 bot.on("msg:text", async (ctx: any) => {
-  console.log(ctx.message.chat);
   if (ctx.message.chat.type !== "private") return;
   await messageRouter(ctx);
 });

@@ -1,11 +1,13 @@
 import { Bot } from "grammy";
+import { addController } from "../controllers/commandControll";
 import { sendMessage } from "../controllers/handlerFactory";
 
-export const commandRouter = (bot: Bot) => {
-  bot.command("start", async (ctx: any) => {
-    try {
-    } catch (err) {
-      console.log(err);
-    }
-  });
+export const commandRouter = async (ctx: any, route: string) => {
+  switch (route) {
+    case "add":
+      await addController(ctx);
+      break;
+    default:
+      break;
+  }
 };
