@@ -9,7 +9,7 @@ export const sendMessage = async function (
       await ctx.reply(message, { reply_markup: menu });
     }
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };
 //////////////////////////////
@@ -21,7 +21,7 @@ export const wait = function (seconds: number) {
       }, seconds * 1000);
     });
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };
 //////////////////////////////
@@ -29,6 +29,6 @@ export const createOne = async function (Model: any, object: any) {
   try {
     await Model.create(object);
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };

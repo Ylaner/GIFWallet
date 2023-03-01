@@ -56,7 +56,7 @@ export const saveNewGifOnDatabase = async (
       }
     }
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };
 
@@ -67,7 +67,7 @@ export const cantSaveNewGifMessage = async (ctx: any) => {
       "you've send another gif before,\nplease send a key for that gif first"
     );
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };
 
@@ -86,6 +86,6 @@ export const searchForGIF = async function (
     if (gif) return gif;
     else return undefined;
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };

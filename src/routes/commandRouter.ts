@@ -12,6 +12,6 @@ export const commandRouter = async (ctx: any, route: string) => {
         break;
     }
   } catch (err) {
-    const error = err;
+    console.error(err);
   }
 };
