@@ -126,8 +126,8 @@ bot.on(":animation", async (ctx: any) => {
 //   text: '/save',
 //   entities: [ { offset: 0, length: 5, type: 'bot_command' } ]
 // }
-bot.command("add", async (ctx) => {
-  await commandRouter(ctx, "add");
+bot.command("addg", async (ctx) => {
+  await commandRouter(ctx, "addg");
 });
 
 bot.on("msg:text", async (ctx: any) => {
