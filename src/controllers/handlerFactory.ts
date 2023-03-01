@@ -9,7 +9,7 @@ export const sendMessage = async function (
       await ctx.reply(message, { reply_markup: menu });
     }
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 //////////////////////////////
