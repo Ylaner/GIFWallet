@@ -32,6 +32,8 @@ errorHandler(bot);
 const envDatabase = process.env.DATABASE!;
 const DB = envDatabase;
 
+mongoose.set("strictQuery", true);
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(DB);
