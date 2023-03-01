@@ -51,6 +51,11 @@ bot.use(menuCRUD);
 //After this we pass ctx as EvelateContext Type
 bot.use(async (ctx: any, next: Function) => {
   try {
+    // if (ctx.message.chat.type !== "private") {
+    //   const chatPermissions = await ctx.getChat();
+    //   console.log(chatPermissions.permissions);
+    //   if (chatPermissions.permissions.can_send_messages === false) return;
+    // }
     await userAuth(ctx);
     await next();
   } catch (err) {

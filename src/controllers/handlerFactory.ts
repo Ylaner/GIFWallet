@@ -3,9 +3,13 @@ export const sendMessage = async function (
   message: string,
   menu: any = null
 ) {
-  if (menu === null) await ctx.reply(message);
-  else {
-    await ctx.reply(message, { reply_markup: menu });
+  try {
+    if (menu === null) await ctx.reply(message);
+    else {
+      await ctx.reply(message, { reply_markup: menu });
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 //////////////////////////////
