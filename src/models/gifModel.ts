@@ -28,7 +28,7 @@ const gifSchema = new mongoose2.Schema(
     toObject: { virtuals: true },
   }
 );
-gifSchema.index({ user: 1, key: 1, gifId: 1 });
+gifSchema.index({ userObjectId: 1, key: 1, gifId: 1 });
 
 // gifSchema.pre(/^find/, function (next) {
 //   this.populate({
