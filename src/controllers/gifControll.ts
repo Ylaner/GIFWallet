@@ -71,13 +71,13 @@ export const cantSaveNewGifMessage = async (ctx: any) => {
 
 export const searchForGIF = async function (
   gifUniqueId: string,
-  user: string | number,
+  userObjectId: string | number,
   index: string | undefined = undefined
 ) {
   try {
     const gif = await Gif.findOne({
       gifUniqueId,
-      user,
+      userObjectId,
     });
     if (gif) return gif;
     else return undefined;

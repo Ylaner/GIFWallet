@@ -1,7 +1,7 @@
 import { Menu } from "@grammyjs/menu";
 import { userAuth } from "../controllers/authControll";
 import { searchForGIF } from "../controllers/gifControll";
-import { buttonObj, buttonsArray, UserData } from "./types";
+import { buttonObj, buttonsArray, GIFType, UserData } from "./types";
 
 // .text("EDIT", (ctx: any) => {})
 // .text("DELETE", (ctx) => ctx.reply("You pressed B!"))
@@ -36,10 +36,7 @@ export const menuCRUD = menuMaker("menuCRUD", [
       await userAuth(ctx);
       const newUser: UserData = ctx.user.toObject();
 
-      const gif: any = await searchForGIF(
-        newUser.userOnStage.details,
-        newUser._id
-      );
+      const gif = await searchForGIF(newUser.userOnStage.details, newUser._id);
       await gif.deleteOne();
       newUser.userOnStage.stageName = ctx.stageEnums.GIF_SAVED;
       newUser.userOnStage.details = "";
