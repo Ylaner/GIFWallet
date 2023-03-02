@@ -10,15 +10,13 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "grammy": "^1.14.1",
-    "mongoose": "^6.5.4",
-    "yarn": "^1.22.19"
+    "mongoose": "^6.5.4"
   },
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/bot.js",
     "live": "set NODE_ENV=development&& nodemon nodemon ./dist/bot.js",
-    "live:prod": "set NODE_ENV=production&& nodemon ./dist/bot.js",
-    "yarn": "curl -F url=https://dead-tuna-life-jacket.cyclic.app:443 https://api.telegram.org/bot$TELEGRAM_API_TOKEN/setWebhook"
+    "live:prod": "set NODE_ENV=production&& nodemon ./dist/bot.js"
   },
   "author": "@Y_Laner",
   "license": "ISC",
