@@ -22,7 +22,6 @@ export const userAuth = async function (ctx: any) {
 
     if (!newUser) {
       newUser = await userCreate(userData);
-      await sendMessage(ctx, "Welcome,I will be wait for your first GIF");
     }
     //passing the query
     ctx.user = newUser;

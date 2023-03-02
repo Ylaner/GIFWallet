@@ -24,3 +24,19 @@ export const addController = async (ctx: any) => {
     console.error(err);
   }
 };
+
+export const startController = async (ctx: any) => {
+  try {
+    const data = ctx.message!;
+    if (data.chat.type === "private") {
+      await sendMessage(ctx, "Welcome, Send a GIF for start");
+    } else {
+      await sendMessage(
+        ctx,
+        "Use /add method to save GIF and use @GIFWallet_bot To find your GIF"
+      );
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};

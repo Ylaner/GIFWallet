@@ -5,10 +5,10 @@ export const inlineQueriesControll = async function (ctx: any) {
     const query = ctx.update.inline_query?.query!;
     // Test
     const arrayOfQuery = query.toLowerCase().split(" ");
-
+    console.log(ctx.user._id);
     const gifs = await Gif.find({
       key: { $all: arrayOfQuery },
-      user: ctx.user._id,
+      userObjectId: ctx.user._id,
     });
     let i = 0;
     const replyGifs = gifs.map((gif: any) => {
