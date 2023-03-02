@@ -17,7 +17,7 @@ export const userAuth = async function (ctx: any) {
       },
     } as UserData;
 
-    const id = ctx.from.id;
+    const id = ctx.from?.id;
     let newUser = await User.findOne({ id });
 
     if (!newUser) {
