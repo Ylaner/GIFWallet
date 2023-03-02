@@ -132,6 +132,16 @@ bot.chatType(["private", "group", "supergroup"]).command("add", async (ctx) => {
   }
 });
 
+bot
+  .chatType(["private", "group", "supergroup"])
+  .command("start", async (ctx) => {
+    try {
+      await commandRouter(ctx, "start");
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
 bot.chatType("private").on("msg:text", async (ctx: any) => {
   try {
     await messageRouter(ctx);

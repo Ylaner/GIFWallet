@@ -3,6 +3,7 @@ import { sendMessage } from "./handlerFactory";
 
 export const addController = async (ctx: any) => {
   try {
+    console.log("userAuth triggerd");
     const data = ctx.message!;
     if (data.chat.type === "private") {
       await sendMessage(ctx, "This commend is only for the groups.");

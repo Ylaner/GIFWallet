@@ -7,6 +7,8 @@ import { UserData } from "../utils/types";
 ////////////////////////////////////////////
 export const userAuth = async function (ctx: any) {
   try {
+    console.log("userAuth triggerd");
+
     ctx.stageEnums = { ...stageEnums };
 
     const userData = {
