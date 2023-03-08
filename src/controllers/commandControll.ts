@@ -5,7 +5,7 @@ export const addController = async (ctx: any) => {
   try {
     const data = ctx.message!;
     const gif = data.reply_to_message?.animation;
-    if (gif) return;
+    if (!gif) return;
     if (data.chat.type === "private") {
       await sendMessage(ctx, "This commend is only for the groups.");
       return;
