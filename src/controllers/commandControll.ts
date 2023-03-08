@@ -3,8 +3,9 @@ import { sendMessage } from "./handlerFactory";
 
 export const addController = async (ctx: any) => {
   try {
-    console.log("userAuth triggerd");
     const data = ctx.message!;
+    const gif = data.reply_to_message?.animation;
+    if (gif) return;
     if (data.chat.type === "private") {
       await sendMessage(ctx, "This commend is only for the groups.");
       return;
@@ -14,7 +15,6 @@ export const addController = async (ctx: any) => {
       return;
     }
     let key;
-    const gif = data.reply_to_message.animation;
     key = data.text.split("/add ")[1]?.split(" ");
     if (!key) {
       await sendMessage(ctx, "please send your key after /add");
